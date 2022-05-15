@@ -11,7 +11,11 @@ A chart is a collection of files that describe a related set of Kubernetes resou
 ## Prerequisites
 
 * 請先建立一個 Kubernetes Cluster, 之後我們就透過 helm 做服務的佈署及後續的管理.
-* 安裝 kubectl, 並確認 `~/.kube/config` 存在且配置正確.
+* helm 預設存取 `~/.kube/config` 的 K8s cluster 設定, 所以安裝 kubectl, 並確認 `~/.kube/config` 存在且配置正確, 如果發生 kubectl 指令正常運行但是 helm 指令卻無法連到正確的 k8s cluser 那需要將當前 kubectl config 同步到 `~/.kube/config`
+
+```
+kubectl config view --raw >~/.kube/config
+```
 
 ## Install Helm
 
@@ -84,10 +88,10 @@ helm list
 helm status demo-app
 ```
 
-* 使用本地端的 chart 更新 Release
+* 使用本地端的 chart 更新 Release, flag `--install` 代表當指定的 release 不存在時就會執行 install, 另外也可以搭配 `--dry-run` 可以看到安裝結果, 而不會真的將 helm chart 佈署至群集, 可做為 debug 的用途.
 
 ```
-helm upgrade demo-app ./demo-chart --debug
+helm upgrade demo-app ./demo-chart --install --debug
 ```
 
 * 將 Release 退到指定的版本
