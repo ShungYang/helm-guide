@@ -116,4 +116,5 @@ helm uninstall
 
 * [Quickstart Guide](https://helm.sh/docs/intro/quickstart/)
 
-__Enjoy!__
+__Enjoy!__# helm-guide
+

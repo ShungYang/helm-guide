@@ -1,0 +1,47 @@
+# Default values for demo-chart.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+nameOverride: "demo-app"
+
+fullnameOverride: ""
+
+microbot:
+
+  replicaCount: 2
+
+  image:
+    repository: dontrebootme/microbot
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: v1
+
+  service:
+    port: 8080
+    nodeport: 31080
+
+
+nginx:
+
+  replicaCount: 1
+
+  image:
+    repository: nginxdemos/hello
+    tag: 0.3
+
+  service:
+    port: 8080
+    nodeport: 31081
+
+
+busybox:
+
+  replicaCount: 1
+
+  image:
+    repository: busybox
+    tag: stable
+
+  command:
+    - "/bin/sh"
+    - "-c"
+    - "echo 'Hello K8s-dev'"

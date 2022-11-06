@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: {{ include "demo-chart.name" . }}-busybox
+  name: {{ include "demo-chart.name" . }}-busybox
+spec:
+  replicas: {{ .Values.busybox.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "demo-chart.name" . }}-busybox
+  template:
+    metadata:
+      labels:
+        app: {{ include "demo-chart.name" . }}-busybox
+    spec:
+      containers:
+        - name: {{ include "demo-chart.name" . }}-busybox
+          image: "{{ .Values.busybox.image.repository }}:{{ .Values.busybox.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: IfNotPresent
+          command:
+          {{- range .Values.busybox.command }}
+            - {{ . | quote }}
+          {{- end }}
+
+          # command: ['sh', '-c', 'echo Container 1 is Running ; sleep 3600']

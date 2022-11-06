@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "demo-chart.name" . }}-microbot
+  labels:
+    app: {{ include "demo-chart.name" . }}-microbot
+spec:
+  type: NodePort
+  ports:
+    - port: {{ .Values.microbot.service.port }}
+      protocol: TCP
+      targetPort: 80
+      nodePort: {{ .Values.microbot.service.nodeport }}
+  selector:
+    app: {{ include "demo-chart.name" . }}-microbot

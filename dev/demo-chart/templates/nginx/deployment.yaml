@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: {{ include "demo-chart.name" . }}-nginx
+  name: {{ include "demo-chart.name" . }}-nginx
+spec:
+  replicas: {{ .Values.nginx.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "demo-chart.name" . }}-nginx
+  template:
+    metadata:
+      labels:
+        app: {{ include "demo-chart.name" . }}-nginx
+    spec:
+      containers:
+        - image: "{{ .Values.nginx.image.repository }}:{{ .Values.nginx.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: IfNotPresent
+          name: {{ include "demo-chart.name" . }}-nginx
+          ports:
+            - containerPort: 80
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 5
+            timeoutSeconds: 30
+          resources: {}
+      restartPolicy: Always
+      serviceAccountName: ""

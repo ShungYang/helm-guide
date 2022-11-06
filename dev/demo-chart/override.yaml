@@ -1,0 +1,12 @@
+busybox:
+
+  replicaCount: 1
+
+  image:
+    repository: busybox
+    tag: stable
+
+  command:
+    - "/bin/sh"
+    - "-c"
+    - "echo 'Hello New K8s-dev'"
